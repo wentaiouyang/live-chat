@@ -1,30 +1,21 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { LoginPage } from '@/pages/LoginPage'
+import { HomePage } from '@/pages/HomePage'
+import { SignUp } from '@/pages/SignUp'
+import { NotFound } from '@/pages/NotFound'
 
-function Home() {
-  return <h2>Home Page</h2>
-}
+// moved to `pages/HomePage`
 
-function About() {
-  return <h2>About Page</h2>
-}
-
-function NotFound() {
-  return <h2>404 Not Found</h2>
-}
+// moved to `pages/NotFound`
 
 function App() {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="flex min-h-svh flex-col items-center justify-center">
-        <Button>Click me</Button>
-      </div>
+    <div className="min-h-svh bg-background">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-
-          {/* 通配符：兜底 404 页面 */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
