@@ -1,9 +1,13 @@
 import { Button } from '@/components/ui/button'
+import Aurora from '@/components/ui/aurora'
 
 export function HomePage() {
   return (
-    <div className="grid min-h-svh grid-cols-1 bg-background md:grid-cols-[320px_1fr]">
-      <aside className="hidden border-r bg-card p-4 md:block">
+    <div className="relative grid min-h-svh grid-cols-1 bg-background md:grid-cols-[320px_1fr]">
+      <div className="pointer-events-none absolute inset-0 opacity-30">
+        <Aurora colorStops={['#5227FF', '#7cff67', '#00D4FF']} amplitude={1.0} blend={0.6} />
+      </div>
+      <aside className="hidden border-r bg-card/60 backdrop-blur p-4 md:block">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Chats</h2>
           <Button size="sm" variant="outline">
@@ -30,8 +34,8 @@ export function HomePage() {
         </div>
       </aside>
 
-      <main className="flex flex-col">
-        <header className="flex items-center justify-between border-b px-4 py-3">
+      <main className="relative flex flex-col">
+        <header className="flex items-center justify-between border-b bg-background/60 backdrop-blur px-4 py-3">
           <div>
             <h1 className="text-lg font-semibold leading-none tracking-tight">General</h1>
             <p className="text-sm text-muted-foreground">3 participants, 12 unread</p>

@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import Aurora from '@/components/ui/aurora'
 
 export function NotFound() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-background px-6 py-12 text-center">
+    <div className="relative flex min-h-svh flex-col items-center justify-center bg-background px-6 py-12 text-center">
+      <div className="pointer-events-none absolute inset-0">
+        <Aurora colorStops={['#5227FF', '#7cff67', '#00D4FF']} amplitude={1.0} blend={0.6} />
+      </div>
       <div className="mx-auto max-w-2xl">
         <p className="text-6xl font-extrabold tracking-tight text-muted-foreground sm:text-7xl">
           404

@@ -10,6 +10,7 @@ export function AboutPage() {
         <Aurora colorStops={['#5227FF', '#7cff67', '#5227FF']} amplitude={1.0} blend={0.6} />
       </div>
       <div className="relative mx-auto w-full max-w-3xl text-center">
+        <h1 className="my-4 text-4xl font-bold tracking-tight sm:text-5xl">Aurora</h1>
         <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/70">
           Live Chat
         </span>
@@ -26,7 +27,7 @@ export function AboutPage() {
             <Link to="/login">Get started</Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <Link className="text-black" to="/signup">
+            <Link className="text-white" to="/signup">
               Create account
             </Link>
           </Button>
