@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import Aurora from '@/components/ui/aurora'
 
 export function SignUp() {
   return (
-    <div className="flex min-h-svh items-center justify-center bg-background px-6 py-12">
-      <div className="w-full max-w-md">
+    <div className="relative flex min-h-svh items-center justify-center bg-background px-6 py-12">
+      <div className="pointer-events-none absolute inset-0 opacity-30">
+        <Aurora colorStops={['#5227FF', '#7cff67', '#00D4FF']} amplitude={1.0} blend={0.6} />
+      </div>
+      <div className="w-full max-w-md z-100">
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
           <p className="mt-1 text-sm text-muted-foreground">Join Live Chat in seconds</p>
         </div>
 
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
+        <div className="rounded-lg border bg-card/60 backdrop-blur p-6 shadow-sm">
           <form
             className="space-y-4"
             onSubmit={(e) => {
