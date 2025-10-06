@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import Aurora from '@/components/ui/aurora'
+import config from '@/config'
 
 export function AboutPage() {
   return (
@@ -12,7 +13,7 @@ export function AboutPage() {
       <div className="relative mx-auto w-full max-w-3xl text-center">
         <h1 className="my-4 text-4xl font-bold tracking-tight sm:text-5xl">Aurora</h1>
         <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/70">
-          Live Chat
+          Live Chat {config.version}
         </span>
         <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
           Real‑time chat for modern teams
