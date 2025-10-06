@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import Aurora from '@/components/ui/aurora'
 
-export function HomePage() {
+export function ChatPage() {
   return (
     <div className="relative grid min-h-svh grid-cols-1 bg-background md:grid-cols-[320px_1fr]">
       <div className="pointer-events-none absolute inset-0 opacity-30">
@@ -94,4 +94,4 @@ export function HomePage() {
   )
 }
 
-export default HomePage
+export default ChatPage

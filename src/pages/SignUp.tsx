@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { useToast } from '@/hooks/use-toast'
 import Aurora from '@/components/ui/aurora'
 
 export function SignUp() {
+  const { toast } = useToast()
+  const handleSubmit = (e: React.FormEvent) => {
+    toast({
+      title: 'Success Notification',
+      description: 'Operation completed successfully!',
+      variant: 'success',
+    })
+    e.preventDefault()
+  }
+
   return (
     <div className="relative flex min-h-svh items-center justify-center bg-background px-6 py-12">
       <div className="pointer-events-none absolute inset-0 opacity-30">
@@ -15,12 +26,7 @@ export function SignUp() {
         </div>
 
         <div className="rounded-lg border bg-card/60 backdrop-blur p-6 shadow-sm">
-          <form
-            className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault()
-            }}
-          >
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">
                 Name
