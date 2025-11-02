@@ -1,8 +1,40 @@
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import type { AppDispatch } from '@/store/store'
 import { Button } from '@/components/ui/button'
 import Aurora from '@/components/ui/aurora'
+import { login } from '@/store/authSlices'
+import { useToast } from '@/hooks/use-toast'
+import { Helpers } from '@/utils'
 
 export function LoginPage() {
+  const { toast } = useToast()
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch<AppDispatch>()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    let result = await dispatch(login({ email, password }))
+    if (login.fulfilled.match(result)) {
+      Helpers.storeToken(result.payload.token)
+      toast({
+        title: 'Success Notification',
+        description: 'Operation completed successfully!',
+        variant: 'success',
+      })
+      navigate('/chat')
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Failed to login',
+        variant: 'destructive',
+      })
+    }
+  }
   return (
     <div className="relative flex min-h-svh items-center justify-center bg-background px-6 py-12">
       <div className="pointer-events-none absolute inset-0 opacity-30">
@@ -19,6 +51,7 @@ export function LoginPage() {
             className="space-y-4"
             onSubmit={(e) => {
               e.preventDefault()
+              handleSubmit(e)
             }}
           >
             <div className="space-y-2">
@@ -28,6 +61,8 @@ export function LoginPage() {
               <input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
                 className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
@@ -42,6 +77,8 @@ export function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
               />

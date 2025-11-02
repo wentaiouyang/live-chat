@@ -1,7 +1,58 @@
+import { useDispatch } from 'react-redux'
 import { Button } from '@/components/ui/button'
 import Aurora from '@/components/ui/aurora'
+import { getUserInfo } from '@/store/authSlices'
+import type { AppDispatch } from '@/store/store'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useNavigate } from 'react-router-dom'
+import { Helpers } from '@/utils'
+import { User, LogOut } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 export function ChatPage() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+  const [userInitial, setUserInitial] = useState('U')
+
+  // Get user name initial from JWT token and fetch user info
+  useEffect(() => {
+    const fetchUserInitial = async () => {
+      const token = Helpers.getToken()
+      if (!token) return
+
+      try {
+        const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+        const json = JSON.parse(atob(base64))
+        const id = json.id || ''
+        if (id) {
+          const userInfo = await dispatch(getUserInfo(id))
+          if (getUserInfo.fulfilled.match(userInfo)) {
+            const name = userInfo.payload.name || ''
+            if (name) {
+              setUserInitial(name.charAt(0).toUpperCase())
+            }
+          }
+        }
+      } catch {
+        // If token parsing fails, keep default 'U'
+      }
+    }
+
+    fetchUserInitial()
+  }, [dispatch])
+
+  const handleLogout = () => {
+    Helpers.removeToken()
+    navigate('/login')
+  }
+
   return (
     <div className="relative grid min-h-svh grid-cols-1 bg-background md:grid-cols-[320px_1fr]">
       <div className="pointer-events-none absolute inset-0 opacity-30">
@@ -45,6 +96,28 @@ export function ChatPage() {
               Invite
             </Button>
             <Button size="sm">New Message</Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="relative flex size-9 items-center justify-center rounded-full bg-secondary outline-none ring-offset-2 ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <Avatar className="size-9">
+                    <AvatarFallback className="bg-secondary text-sm font-medium">
+                      {userInitial}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem onClick={() => navigate('/userinfo')}>
+                  <User className="mr-2 size-4" />
+                  Account
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} variant="destructive">
+                  <LogOut className="mr-2 size-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 

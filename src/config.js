@@ -1,5 +1,6 @@
 import axios from 'axios'
-const version = await axios.get('https://api.github.com/repos/wentaiouyang/live-chat/tags')
+const version =
+  (await axios.get('https://api.github.com/repos/wentaiouyang/live-chat/tags')) || null
 // Environment configuration
 const config = {
   // Development environment configuration
