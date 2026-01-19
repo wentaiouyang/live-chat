@@ -4,25 +4,27 @@ import Aurora from '@/components/ui/aurora'
 
 export function NotFound() {
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center bg-background px-6 py-12 text-center">
-      <div className="pointer-events-none absolute inset-0">
+    <div className="relative flex min-h-svh flex-col items-center justify-center bg-background px-6 py-12 text-center overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 opacity-40">
         <Aurora colorStops={['#5227FF', '#7cff67', '#00D4FF']} amplitude={1.0} blend={0.6} />
       </div>
-      <div className="mx-auto max-w-2xl z-100">
-        <p className="text-6xl font-extrabold tracking-tight text-muted-foreground sm:text-7xl">
+      <div className="mx-auto max-w-2xl z-10 relative">
+        <p className="text-8xl font-extrabold tracking-tight text-foreground/20 sm:text-9xl select-none">
           404
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Page not found</h1>
-        <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-          Sorry, we couldn’t find the page you’re looking for.
+        <h1 className="mt-8 text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
+          页面未找到
+        </h1>
+        <p className="mt-6 text-lg text-muted-foreground sm:text-xl max-w-lg mx-auto">
+          抱歉，我们找不到您要访问的页面。它可能已被移动或删除。
         </p>
 
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <Button asChild>
-            <Link to="/">Go back home</Link>
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button size="lg" className="w-full sm:w-auto min-w-[140px]" asChild>
+            <Link to="/">返回首页</Link>
           </Button>
-          <Button variant="outline" asChild>
-            <Link to="/login">Login</Link>
+          <Button variant="outline" size="lg" className="w-full sm:w-auto min-w-[140px]" asChild>
+            <Link to="/login">登录</Link>
           </Button>
         </div>
       </div>
