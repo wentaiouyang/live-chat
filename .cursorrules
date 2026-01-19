@@ -1,0 +1,191 @@
+# Live Chat Project - Cursor Rules
+
+## Project Overview
+This is a React + TypeScript live chat application built with Vite, using Redux Toolkit for state management, React Router for routing, and Tailwind CSS for styling.
+
+## Tech Stack
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **State Management**: Redux Toolkit (@reduxjs/toolkit)
+- **Routing**: React Router DOM v7
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Form Handling**: React Hook Form with Zod validation
+- **HTTP Client**: Axios
+- **Icons**: Lucide React
+- **Code Quality**: ESLint, Prettier, TypeScript
+
+## Code Style Guidelines
+
+### TypeScript
+- Always use TypeScript with strict type checking
+- Prefer explicit types over `any`
+- Use type inference where appropriate
+- Export types and interfaces when they're used across multiple files
+- Use `type` for unions/intersections, `interface` for object shapes that might be extended
+
+### React Best Practices
+- Use functional components with hooks
+- Prefer named exports for components: `export function ComponentName() {}`
+- Use default exports only when necessary (e.g., for route components)
+- Always use TypeScript for component props: `interface ComponentProps { ... }`
+- Use React 19 features appropriately
+- Prefer `useState` and `useEffect` for local state and side effects
+- Use custom hooks for reusable logic
+
+### Redux Toolkit
+- Use Redux Toolkit slices for state management
+- Follow the pattern: `createSlice` with `reducers` and `extraReducers`
+- Use `createAsyncThunk` for async operations
+- Type dispatch as `AppDispatch` from store: `useDispatch<AppDispatch>()`
+- Use typed selectors: `useSelector((state: RootState) => ...)`
+- Match action results using `.fulfilled.match()`, `.rejected.match()`, etc.
+
+### File Organization
+- Components: `src/components/` (organized by feature or shared/ui)
+- Pages: `src/pages/`
+- Store: `src/store/` (slices and store configuration)
+- Utils: `src/utils/`
+- Hooks: `src/hooks/`
+- Routes: `src/routes/`
+- Context: `src/context/`
+- Use path aliases: `@/` maps to `src/`
+
+### Naming Conventions
+- Components: PascalCase (e.g., `ChatPage.tsx`, `UserInfo.tsx`)
+- Files: Match component name (e.g., `ChatPage.tsx` for `ChatPage` component)
+- Functions: camelCase (e.g., `handleSubmit`, `fetchUserData`)
+- Constants: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`)
+- Types/Interfaces: PascalCase (e.g., `UserInfo`, `AuthState`)
+- Redux slices: camelCase with "Slice" suffix (e.g., `authSlice`)
+
+### Styling with Tailwind CSS
+- Use Tailwind utility classes for styling
+- Prefer Tailwind classes over inline styles
+- Use `cn()` utility from `@/lib/utils` for conditional classes
+- Follow the existing design system (shadcn/ui components)
+- Use semantic color tokens: `bg-background`, `text-foreground`, `border`, etc.
+- Use responsive prefixes: `md:`, `lg:`, etc.
+- Use backdrop-blur for glassmorphism effects where appropriate
+
+### Component Structure
+```typescript
+// Import order:
+// 1. React and React-related
+// 2. Third-party libraries
+// 3. Internal imports (components, hooks, utils, store)
+// 4. Types
+
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Button } from '@/components/ui/button'
+import { getUserInfo } from '@/store/authSlices'
+import type { AppDispatch } from '@/store/store'
+```
+
+### Form Handling
+- Use React Hook Form for form management
+- Use Zod schemas for validation with `@hookform/resolvers/zod`
+- Provide proper error handling and user feedback
+- Use toast notifications for success/error messages
+
+### API Calls
+- Use Axios for HTTP requests
+- Handle async operations with Redux Toolkit async thunks
+- Provide proper error handling
+- Store tokens securely (use helpers from `@/utils`)
+
+### Routing
+- Define routes in `src/routes/AppRoutes.tsx`
+- Use `useNavigate()` for programmatic navigation
+- Use `Link` component for declarative navigation
+- Protect routes that require authentication
+
+### Error Handling
+- Always handle errors in try-catch blocks for async operations
+- Use toast notifications for user-facing errors
+- Log errors appropriately for debugging
+- Provide fallback UI for error states
+
+### Code Quality
+- Follow ESLint rules (configured in `eslint.config.js`)
+- Format code with Prettier
+- Keep components focused and single-responsibility
+- Extract reusable logic into custom hooks or utility functions
+- Comment complex logic, but prefer self-documenting code
+
+### Performance
+- Use `React.memo()` for expensive components when appropriate
+- Lazy load routes if the application grows large
+- Optimize re-renders with proper dependency arrays in hooks
+- Use `useCallback` and `useMemo` judiciously (only when needed)
+
+### Accessibility
+- Use semantic HTML elements
+- Provide proper ARIA labels where needed
+- Ensure keyboard navigation works
+- Maintain proper focus management
+
+### Testing Considerations
+- Write testable code (pure functions, clear separation of concerns)
+- Keep business logic separate from UI components
+- Use meaningful variable and function names
+
+## Common Patterns
+
+### Redux Async Thunk Pattern
+```typescript
+export const fetchData = createAsyncThunk(
+  'slice/fetchData',
+  async (id: string) => {
+    const response = await axios.get(`/api/data/${id}`)
+    return response.data
+  }
+)
+
+// In component:
+const result = await dispatch(fetchData(id))
+if (fetchData.fulfilled.match(result)) {
+  // Handle success
+}
+```
+
+### Form Submission Pattern
+```typescript
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  const result = await dispatch(action(data))
+  if (action.fulfilled.match(result)) {
+    toast({ title: 'Success', variant: 'success' })
+    navigate('/path')
+  } else {
+    toast({ title: 'Error', variant: 'destructive' })
+  }
+}
+```
+
+### Token Management
+- Use `Helpers.getToken()` to retrieve token
+- Use `Helpers.storeToken(token)` to store token
+- Use `Helpers.removeToken()` to clear token
+- Always check for token before making authenticated requests
+
+## What NOT to Do
+- Don't use `any` type without good reason
+- Don't mix default and named exports inconsistently
+- Don't create deeply nested component structures
+- Don't put business logic directly in components (extract to hooks/utils)
+- Don't hardcode API URLs (use environment variables or config)
+- Don't commit sensitive data (tokens, API keys)
+- Don't use inline styles when Tailwind classes are available
+- Don't create unnecessary re-renders
+
+## When Adding New Features
+1. Check if similar functionality exists
+2. Follow existing patterns and conventions
+3. Use existing UI components from `@/components/ui/`
+4. Update routes if adding new pages
+5. Add proper TypeScript types
+6. Handle loading and error states
+7. Provide user feedback (toasts, loading indicators)
+

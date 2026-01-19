@@ -1,20 +1,17 @@
-import axios from 'axios'
-const version =
-  (await axios.get('https://api.github.com/repos/wentaiouyang/live-chat/tags')) || null
 // Environment configuration
 const config = {
   // Development environment configuration
   development: {
     apiBaseUrl: 'http://localhost:3000',
     appName: 'Live Chat (Dev)',
-    version: version.data[0].name,
+    version: '0.0.0',
   },
 
   // Production environment configuration
   production: {
     apiBaseUrl: 'https://api.yourapp.com',
     appName: 'Live Chat',
-    version: version.data[0].name,
+    version: '0.0.0',
   },
 }
 
