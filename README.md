@@ -67,3 +67,4 @@ export default tseslint.config([
   },
 ])
 ```
+Licensed under the MIT License.
