@@ -9,7 +9,7 @@ const config = {
 
   // Production environment configuration
   production: {
-    apiBaseUrl: 'https://api.yourapp.com',
+    apiBaseUrl: 'https://live-chat-backend-fawn.vercel.app',
     appName: 'Live Chat',
     version: '0.0.0',
   },
