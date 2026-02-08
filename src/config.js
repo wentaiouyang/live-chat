@@ -9,7 +9,7 @@ const config = {
 
   // Production environment configuration
   production: {
-    apiBaseUrl: 'http://aurorachat.ap-southeast-2.elasticbeanstalk.com/',
+    apiBaseUrl: 'http://aurorachat.ap-southeast-2.elasticbeanstalk.com',
     appName: 'Live Chat',
     version: '0.0.0',
   },
