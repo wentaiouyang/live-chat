@@ -9,7 +9,7 @@ const config = {
 
   // Production environment configuration
   production: {
-    apiBaseUrl: 'live-chat-backend-production-11bd.up.railway.app',
+    apiBaseUrl: 'https://live-chat-backend-production-11bd.up.railway.app',
     appName: 'Live Chat',
     version: '0.0.0',
   },
